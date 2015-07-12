@@ -3,54 +3,194 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="vendor/angular-material/angular-material.css">
     <link rel="stylesheet" type="text/css" href="vendor/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="vendor/lumx/dist/lumx.css">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    
+
   </head>
     <body>
 
-
       <md-toolbar>
         <div class="md-toolbar-tools">
-          <md-button class="md-icon-button" aria-label="Settings">
-            <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
-          </md-button>
           <h2>
             <span>Momofuku Admin</span>
           </h2>
-          <span flex></span>
-          </md-button>
-         
+          <span flex></span>   
         </div>
       </md-toolbar>
-      <div ng-controller="FormController">
-        <div  layout="row" layout-align="center center">
-          
-            <div flex="70">
-              <div>
-                <md-toolbar style="background-color:#FFE0B2; margin-top: 20px">
-                  <div class="md-toolbar-tools" > 
-                    <h2>
-                      <span>Cities</span>
-                    </h2>  
-                    <span flex></span> 
-                     <md-button class="md-fab" ng-click="showAdvanced($event)">
-                      <i class="fa fa-plus"></i>
-                     </md-button>
+        <div ng-controller="FormController">
+          <div  layout="row" layout-align="center center">
+            
+              <div flex="70">
+                <div>
+                  <md-toolbar style="background-color:#FFE0B2; margin-top: 20px">
+                    <div class="md-toolbar-tools" > 
+                      <h2>
+                        <span>Cities</span><span ng-show="showform">hello everyone</span>
+                      </h2>  
+                      <span flex></span> 
+                       <md-button  class="md-fab" aria-label="form" ng-click="showDialog('formDialog')">
+                        <i class="fa fa-plus"></i>
+                       </md-button>
+                    </div>
+                  </md-toolbar>
+                </div>
+                <div ng-repeat="city in cities">
+                  <md-card ng-click="showCityDetailsDialog('cityDialog')">              
+                    <p style="padding:20px">{{city}}</p>
+                  </md-card>   
+                </div>
+              </div>
+
+          </div>
+
+
+          <!-- Dialog Form -->
+            <lx-dialog class="dialog dialog--l" id="formDialog" ng-show="showStateName" auto-close="true" onclose="closingDialog()" onscrollend="scrollEndDialog()">
+              <div class="dialog__header">
+                <div class="toolbar bgc-light-blue-500 pl++">
+                    <span class="toolbar__label tc-white fs-title">
+                        Add New Location
+                    </span>
+                </div>
+              </div>
+
+                <div class="dialog__content" style="margin-left:20px">
+                    <div flex-container="row">
+                      <lx-text-field label="City Name">
+                        <input type="text" ng-model="cityName">
+                      </lx-text-field>
+                    </div>
+                    <P>RESTAURANTS</P>
+                      <div ng-repeat="venue in venues">
+                        <div flex-container="row" flex-gutter="24">
+                          <md-card>
+                           {{venue}}
+
+                           
+                            <div class="dialog__content" ng-show = "showMealForm">
+                              <div class="card">
+                                <lx-tabs>
+                                    <lx-tab heading="Monday">
+                                        <p class="p+">Monday</p>
+                                    </lx-tab>
+                                    <lx-tab heading="Tuesday">
+                                        <p class="p+">Tuesday</p>
+                                    </lx-tab>
+                                    <lx-tab heading="Wednesday">
+                                        <p class="p+">Wednesday</p>
+                                    </lx-tab>
+                                    <lx-tab heading="Thursday">
+                                        <p class="p+">Thursday</p>
+                                    </lx-tab>
+
+                                    <lx-tab heading="Friday">
+                                        <p class="p+">Friday</p>
+                                    </lx-tab>
+
+                                    <lx-tab heading="Saturday">
+                                        <p class="p+">Saturday</p>
+                                    </lx-tab>
+                                    <lx-tab heading="Sunday">
+                                        <p class="p+">Sunday</p>
+                                    </lx-tab>
+                                </lx-tabs>
+                                <div flex-item>
+                                  <button class="btn btn--m btn--black btn--flat" ng-click="hideMealForm($index)">Cancel</button>
+                                  <button class="btn btn--m btn--black btn--flat" ng-click="hideMealForm($index)" lx-ripple>Save</button>
+                                </div>
+                              </div>
+                            </div>
+                            <div flex-item>
+                            <button class="btn btn--m btn--blue btn--raised mt++" ng-click="" lx-ripple>Delete Venue</button>
+                            <button class="btn btn--m btn--blue btn--raised mt++" ng-click="showMeal()" lx-ripple>Add Meal </button>
+                        
+                        </div>
+                        </md-card>
+                      </div>  
+
+
+                      </div>
+
+                    <div flex-container="row" flex-gutter="24">
+                      <lx-text-field label="Restaurant Name">  
+                        <input type="text" ng-model="venue">
+                      </lx-text-field>
+                  
+                      <div flex-item>
+                        <button class="btn btn--m btn--blue btn--raised mt++" ng-click="addToVenue(venue)" lx-ripple>Add venue</button>
+                      </div>
+                    </div>
+                </div>
+
+              <div class="dialog__actions">
+                <button class="btn btn--m btn--black btn--flat" lx-ripple lx-dialog-close>Cancel</button>
+                <button class="btn btn--m btn--black btn--flat" ng-click="save(cityName)" lx-ripple>Save</button>
+              </div>
+          </lx-dialog>
+          <!-- City Dialog -->
+
+           <lx-dialog class="dialog dialog--l" id="cityDialog" ng-show="showStateName" auto-close="true" onclose="closingDialog()" onscrollend="scrollEndDialog()">
+              <div class="dialog__header">
+                <div class="toolbar bgc-light-blue-500 pl++">
+                    <span class="toolbar__label tc-white fs-title">
+                        Add New Location
+                    </span>
+                </div>
+              </div>
+
+              <div class="dialog__content">
+                  <div flex-container="row">
+                     <lx-text-field label="City Name">
+                      <input type="text" ng-model="cityName">
+                    </lx-text-field>
                   </div>
-                </md-toolbar>
+               <div ng-repeat="city in cities">
+                  <md-card ng-click="showCityDetailsDialog('cityDialog')">              
+                    <p style="padding:20px">{{city}}</p>
+                  </md-card>   
+                </div>
               </div>
-              <div ng-repeat="city in cities">
-                <md-card>              
-                  <p>{{city}}</p>
-                </md-card>   
+
+              <div class="dialog__actions">
+                <button class="btn btn--m btn--black btn--flat" lx-ripple lx-dialog-close>Cancel</button>
+                <button class="btn btn--m btn--black btn--flat" ng-click="save(cityName)" lx-ripple>Save</button>
               </div>
-            </div>
+          </lx-dialog>
+
+
+
+
+            <!-- Meal Dialog -->
+
+           <lx-dialog class="dialog dialog--l" id="mealDialog" ng-show="showStateName" auto-close="true" onclose="closingDialog()" onscrollend="scrollEndDialog()">
+              <div class="dialog__header">
+                <div class="toolbar bgc-light-blue-500 pl++">
+                    <span class="toolbar__label tc-white fs-title">
+                        Add New Location
+                    </span>
+                </div>
+              </div>
+
+           
+
+              <div class="dialog__actions">
+                
+              </div>
+          </lx-dialog>
+
+
+
+
+
+
+
+
 
         </div>
-        <div>
-          
-        </div>
 
-      </div>
+      <script src="vendor/jquery/dist/jquery.js"></script>
+
       <script src="vendor/angular/angular.js"></script>
       <script src="vendor/angular-animate/angular-animate.js"></script>
       <script src="vendor/angular-aria/angular-aria.js"></script>
@@ -58,6 +198,10 @@
       <!-- <script src="vendor/angular-mocks/angular-mocks.js"></script> -->
       <script src="vendor/angularfire/dist/angularfire.js"></script>
       <script src="vendor/firebase/firebase.js"></script>
+      
+      <script src="vendor/velocity/velocity.js"></script>
+      <script src="vendor/moment/min/moment-with-locales.js"></script>
+      <script src="vendor/lumx/dist/lumx.js"></script>
       <script src="js/app.js"></script>
       <script src="js/controllers/form-controller.js"></script>
       <script src="js/services/form-service.js"></script>
