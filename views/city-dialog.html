@@ -1,0 +1,43 @@
+<md-dialog aria-label="New Location" style="width: 600px">
+  <form>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>{{city.name}}</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="answer('not applicable')">
+        <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content>
+    <div ng-repeat="(key,value ) in city.restaurants">
+      <md-card>
+        {{value.name}}
+          <div class="md-actions" layout="row">
+            <md-button ng-click="close()" class="md-primary">
+             Delete Restaurant
+            </md-button>
+            <md-button ng-click="save(city.name)" class="md-primary">
+              Add meal
+            </md-button>
+          </div>
+      </md-card>
+    </div>
+    <form name="cityDetailForm">
+      <md-input-container>
+        <label>Restaurant name</label>
+        <input ng-model="city.restaurant.name" name="name" required>
+      </md-input-container>
+    </form>
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="close()" class="md-primary">
+     Cancel
+    </md-button>
+    <md-button ng-click="save(city.restaurant.name)" class="md-primary">
+      Save
+    </md-button>
+  </div>
+  </form>
+</md-dialog>
