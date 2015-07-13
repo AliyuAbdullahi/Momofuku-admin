@@ -1,18 +1,33 @@
 angular.module('Momofuku')
-  .factory('States', ['$firebaseArray', '$firebaseObject',
+  .factory('Cities', ['$firebaseArray', '$firebaseObject',
+
     function($firebaseArray, $firebaseObject) {
-      
+      var firebaseRef = new Firebase('https://momofuku.firebaseio.com/').child('cities');      
       return {
+        restaurants: function(cb){
+          if(!cb){
+            return $firebaseArray(firebaseRef.orderByChild('restaurants'));
+          }
+          else{
+              firebaseRef.orderByChild('restaurants').once('value', function(snap) {
+              cb(snap.val());
+            });
+          }
+          
+        },
+
         all: function(cb) {
           if(!cb) {
-            return $firebaseArray(Refs.allocations);
+            return $firebaseArray(firebaseRef);
           }
           else {
-            Refs.allocations.once('value', function(snap) {
+            firebaseRef.once('value', function(snap) {
               cb(snap.val());
             });
           }
         },
+
+        ref: firebaseRef, 
 
         find: function(id, cb) {
           var ref;
@@ -20,7 +35,7 @@ angular.module('Momofuku')
             ref = new Firebase(id);
           }
           else {
-            ref = Refs.allocations.child(id);
+            ref = firebaseRef.child(id);
           }
           if(!cb) {
             return $firebaseObject(ref);
@@ -31,14 +46,25 @@ angular.module('Momofuku')
             });
           }
         },
+        
+        update: function(data, id, cb) {
+          firebaseRef.child(id).update(data, function(err) {
+            if(err) {
+              cb(err);
+            }
+            else {
+              cb();
+            }
+          });
+        },
 
-        create: function(allocation, cb) {
-          var allocRef = Refs.allocations.push(allocation, function(err) {
+        create: function(city, cb) {
+          var cityRef = firebaseRef.push(city, function(err) {
             if(err) {
               cb(null);
             }
             else {
-              cb(allocRef);
+              cb();
             }
           });
         }
