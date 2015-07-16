@@ -1,43 +1,98 @@
-<md-dialog aria-label="New Location" style="width: 600px">
-  <form>
+<md-dialog aria-label = "New Location" style = "width: 1000px">
   <md-toolbar>
-    <div class="md-toolbar-tools">
+    <div class = "md-toolbar-tools">
       <h2>{{city.name}}</h2>
       <span flex></span>
-      <md-button class="md-icon-button" ng-click="answer('not applicable')">
-        <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+      <md-button class = "md-icon-button" ng-click = "answer('not applicable')">
+        <md-icon md-svg-src = "img/icons/ic_close_24px.svg" aria-label = "Close dialog"></md-icon>
       </md-button>
     </div>
   </md-toolbar>
   <md-dialog-content>
-    <div ng-repeat="(key,value ) in city.restaurants">
-      <md-card>
-        {{value.name}}
-          <div class="md-actions" layout="row">
-            <md-button ng-click="close()" class="md-primary">
-             Delete Restaurant
-            </md-button>
-            <md-button ng-click="save(city.name)" class="md-primary">
-              Add meal
-            </md-button>
-          </div>
-      </md-card>
-    </div>
+    RESTAURANTS
+      <div ng-repeat = "(restaurantId,restaurant ) in city.restaurants">
+        <md-card ng-click="showMealTabDialog($event,restaurant.name)">
+          <h4 class = "mealheader">{{restaurant.name}}</h4>
+          <link rel = "stylesheet" href = "css/styles.css">
+            <md-content class="column" ng-show = "showMeal.first">
+              <section ng-int = "tab = 1" >
+                <ul class = "nav nav-pills" style="text-decoration:none">
+                  <li ng-class="{active: tab === 1 }"><a href ng-click="tab = 1">Monday</a></li>
+                  <li ng-class="{active: tab === 2 }"><a href ng-click="tab = 2">Tuesday</a></li>
+                  <li ng-class="{active: tab === 3 }"><a href ng-click="tab = 3">Wednesday</a></li>
+                  <li ng-class="{active: tab === 4 }"><a href ng-click="tab = 4">Thursday</a></li>
+                  <li ng-class="{active: tab === 5 }"><a href ng-click="tab = 5">Friday</a></li>
+                  <li ng-class="{active: tab === 6 }"><a href ng-click="tab = 6">Saturday</a></li>
+                  <li ng-class="{active: tab === 7 }"><a href ng-click="tab = 7">Sunday</a></li>
+                </ul>
+              </section>
+            <div class = "nil">
+              <div class = "panel" ng-show = "tab === 1">
+                <form name="projectForm">
+                    <md-input-container>
+                      <label> Meal Name</label>
+                      <input name="name" required>
+                    </md-input-container>  
+                    <div class="md-actions" layout="row">
+                    <span flex></span>
+                    <md-button ng-click="close()" class="md-primary">
+                     Cancel
+                    </md-button>
+                    <md-button ng-click="save(city.name)" class="md-primary">
+                      Save
+                    </md-button>
+                  </div>
+                </form>
+              </div>
+              <div class = "panel" ng-show = "tab ===2">
+                <p> Tab 2</p>
+              </div>
+              <div class = "panel" ng-show = "tab ===3">
+                <p> Tab 3</p>
+              </div>
+              <div class = "panel" ng-show = "tab ===4">
+                <p> Tab 4</p>
+              </div>
+              <div class = "panel" ng-show = "tab ===5">
+                <p> Tab 5</p>
+              </div>
+              <div class = "panel" ng-show = "tab ===6">
+                <p> Tab 6</p>
+              </div>
+              <div class = "panel" ng-show = "tab ===7">
+                <p> Tab 7</p>
+              </div>
+            </div>
+            </md-content>  
+            
+    
+
+
+            <div class="md-actions" layout = "row">
+              <md-button ng-click="delete(restaurantId)" class="md-raised md-warn">
+               Delete Restaurant
+              </md-button>
+              <md-button ng-click="addMeal($index)" class="md-primary">
+                Add meal
+              </md-button>
+            </div>
+        </md-card>
+      </div>
     <form name="cityDetailForm">
       <md-input-container>
+      <br>ADD TO RESTAURANTS
         <label>Restaurant name</label>
-        <input ng-model="city.restaurant.name" name="name" required>
+        <input ng-model = "city.restaurant.name" name = "name" required>
       </md-input-container>
+       <md-button ng-click = "save(city.restaurant.name)" class = "md-primary">
+      Add Restaurant
+    </md-button>
     </form>
   </md-dialog-content>
-  <div class="md-actions" layout="row">
+  <div class = "md-actions" layout = "row">
     <span flex></span>
-    <md-button ng-click="close()" class="md-primary">
-     Cancel
-    </md-button>
-    <md-button ng-click="save(city.restaurant.name)" class="md-primary">
-      Save
+    <md-button ng-click = "close()" class = "md-primary">
+      Ok
     </md-button>
   </div>
-  </form>
 </md-dialog>

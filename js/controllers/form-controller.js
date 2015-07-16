@@ -39,10 +39,23 @@ app.controller("FormController", ['$scope','Cities','LxDialogService','LxNotific
    $scope.showCityDialog = function(ev,cityId,city) { 
     $mdDialog.show({
       controller: ['$scope', '$mdDialog', function($scope, $mdDialog) {
-
+        $scope.showMeal = false;
         console.log(city);
         var self = $scope;
+        $scope.tab = 1;
+        $scope.addMeal = function(index){
+          $scope.showMeal = true;
+        };
+        $scope.selectTab = function(setTab){
+          self.tab = setTab;
+        };
+        $scope.isSelected = function(checkTab){
+          return self.tab === checkTab;
+        };
+        $scope.delete = function(restaurantId){
+          Cities.delete(cityId,restaurantId);
 
+        };
         
         $scope.restaurant = Cities.find(cityId,function(){
           
@@ -58,19 +71,6 @@ app.controller("FormController", ['$scope','Cities','LxDialogService','LxNotific
           console.log(cityId.toString());
           self.city.restaurant.name = isValid;
           Cities.ref.child(cityId).child('restaurants').push(data);
-          $mdDialog.hide();
-          // if(isValid){
-          //    Cities.update(self.city,cityId, function(err) {
-          //         if(err) {
-          //           console.log('An error occurred');
-          //         }
-          //         else {
-
-          //           console.log(isValid + ' city created!');
-          //         }
-          //         
-          //       });
-          // }
         };
         $scope.close = function() {
           $mdDialog.hide();

@@ -28,6 +28,9 @@ angular.module('Momofuku')
         },
 
         ref: firebaseRef, 
+        delete: function(cityId, restaurantId) {
+          firebaseRef.child(cityId).child('restaurants').child(restaurantId).remove();
+        },
 
         find: function(id, cb) {
           var ref;

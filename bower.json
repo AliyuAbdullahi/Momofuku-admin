@@ -11,8 +11,6 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.4.2",
-    "angular-material": "~0.10.0",
     "font-awesome": "~4.3.0",
     "firebase": "~2.2.7",
     "angularfire": "~1.1.2",
@@ -20,6 +18,8 @@
     "lumx": "~0.3.64",
     "jquery": "~2.1.4",
     "moment": "~2.10.3",
-    "velocity": "~1.2.2"
+    "velocity": "~1.2.2",
+    "angular": "~1.4.2",
+    "angular-material": "~0.10.0"
   }
 }
