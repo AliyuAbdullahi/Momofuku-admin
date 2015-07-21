@@ -5,7 +5,7 @@ app.controller("FormController", ['$scope','Cities','LxDialogService','LxNotific
    window.cities = $scope.cities;
 
 
-    $scope.showProjectDialog = function(ev) { 
+    $scope.showProjectDialog = function(ev) {
       $mdDialog.show({
         controller: ['$scope', '$mdDialog', function($scope, $mdDialog) {
           $scope.restaurants = Cities.all();
@@ -14,7 +14,7 @@ app.controller("FormController", ['$scope','Cities','LxDialogService','LxNotific
           self.city = null;
           $scope.submitted = false;
           $scope.save = function(isValid){
-         
+
             if(isValid){
                Cities.create($scope.city, function(err) {
                 if(err) {
@@ -36,15 +36,93 @@ app.controller("FormController", ['$scope','Cities','LxDialogService','LxNotific
       });
     };
 
-   $scope.showCityDialog = function(ev,cityId,city) { 
+   $scope.showCityDialog = function(ev,cityId,city) {
     $mdDialog.show({
       controller: ['$scope', '$mdDialog', function($scope, $mdDialog) {
         $scope.showMeal = false;
+        $scope.showDays = false;
+        $scope.showActoin = true;
         console.log(city);
         var self = $scope;
         $scope.tab = 1;
-        $scope.addMeal = function(index){
-          $scope.showMeal = true;
+
+        $scope.addMeal = function(restaurantId){
+          $scope.currentId = restaurantId;
+          $scope.showActoin = false;
+          $scope.showDays = true;
+        };
+        $scope.addToMondayRef = function(item){
+          var data ={
+            name: item
+          };
+          console.log(cityId.toString());
+          self.city.restaurant.Monday.name = item;
+          Cities.ref.child(cityId).child('restaurants').child($scope.currentId).child('daily_meal').child('Monday').push(data);
+
+        };
+        $scope.addToTuesdayRef = function(item){
+          var data ={
+            name: item
+          };
+          console.log(cityId.toString());
+          self.city.restaurant.name = item;
+          Cities.ref.child(cityId).child('restaurants').child($scope.currentId).child('daily_meal').child('Tuesday').push(data);
+
+
+        };
+        $scope.addToWednesdayRef = function(item) {
+          var data ={
+            name: item
+          };
+          console.log(cityId.toString());
+          self.city.restaurant.name = item;
+          Cities.ref.child(cityId).child('restaurants').child($scope.currentId).child('daily_meal').child('Wednesday').push(data);
+
+
+        };
+        $scope.addToThursdayRef = function(item) {
+          var data ={
+            name: item
+          };
+          console.log(cityId.toString());
+          self.city.restaurant.name = item;
+          Cities.ref.child(cityId).child('restaurants').child($scope.currentId).child('daily_meal').child('Thursday').push(data);
+
+
+        };
+        $scope.addToFridayRef = function(item) {
+          var data ={
+            name: item
+          };
+          console.log(cityId.toString());
+          self.city.restaurant.name = item;
+          Cities.ref.child(cityId).child('restaurants').child($scope.currentId).child('daily_meal').child('Friday').push(data);
+
+
+        };
+        $scope.addToSaturdayRef = function(item) {
+          var data ={
+            name: item
+          };
+          console.log(cityId.toString());
+          self.city.restaurant.name = item;
+          Cities.ref.child(cityId).child('restaurants').child($scope.currentId).child('daily_meal').child('Saturday').push(data);
+
+
+        };
+        $scope.addToSundayRef = function(item) {
+          var data ={
+            name: item
+          };
+          console.log(cityId.toString());
+          self.city.restaurant.name = item;
+          Cities.ref.child(cityId).child('restaurants').child($scope.currentId).child('daily_meal').child('Sunday').push(data);
+
+
+        };
+        $scope.addFoodItem = function() {
+          $scope.showActoin = true;
+          $scope.showDays = false;
         };
         $scope.selectTab = function(setTab){
           self.tab = setTab;
@@ -56,14 +134,17 @@ app.controller("FormController", ['$scope','Cities','LxDialogService','LxNotific
           Cities.delete(cityId,restaurantId);
 
         };
-        
+
         $scope.restaurant = Cities.find(cityId,function(){
-          
+
         });
-        
+
         self.city = city;
 
         $scope.submitted = false;
+
+
+
         $scope.save = function(isValid){
           var data ={
             name: isValid

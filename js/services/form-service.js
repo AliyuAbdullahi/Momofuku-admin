@@ -2,7 +2,7 @@ angular.module('Momofuku')
   .factory('Cities', ['$firebaseArray', '$firebaseObject',
 
     function($firebaseArray, $firebaseObject) {
-      var firebaseRef = new Firebase('https://momofuku.firebaseio.com/').child('cities');      
+      var firebaseRef = new Firebase('https://momofuku.firebaseio.com/').child('cities');
       return {
         restaurants: function(cb){
           if(!cb){
@@ -13,7 +13,7 @@ angular.module('Momofuku')
               cb(snap.val());
             });
           }
-          
+
         },
 
         all: function(cb) {
@@ -27,10 +27,11 @@ angular.module('Momofuku')
           }
         },
 
-        ref: firebaseRef, 
+        ref: firebaseRef,
         delete: function(cityId, restaurantId) {
           firebaseRef.child(cityId).child('restaurants').child(restaurantId).remove();
         },
+
 
         find: function(id, cb) {
           var ref;
@@ -49,7 +50,7 @@ angular.module('Momofuku')
             });
           }
         },
-        
+
         update: function(data, id, cb) {
           firebaseRef.child(id).update(data, function(err) {
             if(err) {
