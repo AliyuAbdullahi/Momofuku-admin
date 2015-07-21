@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="vendor/font-awesome/css/font-awesome.css">
    <link rel="stylesheet" href="vendor/lumx/dist/lumx.css">
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-    
+
 
   </head>
     <body>
@@ -15,43 +15,55 @@
           <h2>
             <span>Momofuku Admin</span>
           </h2>
-          <span flex></span>   
+          <span flex></span>
         </div>
       </md-toolbar>
         <div ng-controller="FormController">
           <div  layout="row" layout-align="center center">
-            
+
               <div flex="70">
                 <div>
                   <md-toolbar style="margin-top: 20px">
-                    <div class="md-toolbar-tools" > 
+                    <div class="md-toolbar-tools" >
                       <h2>
                         <span>Cities</span><span ng-show="showform">hello everyone</span>
-                      </h2>  
-                      <span flex></span> 
-                       <md-button  class="md-fab" aria-label="form" ng-click="showProjectDialog($event)">
+                      </h2>
+                      <span flex></span>
+                       <md-button  class="md-fab" aria-label="form" style="box-shadow:0px 5px 5px #666" ng-click="showProjectDialog($event)">
+                       <md-tooltip>
+                        Add City
+                      </md-tooltip>
                         <i class="fa fa-plus"></i>
                        </md-button>
                     </div>
                   </md-toolbar>
                 </div>
                 <div ng-repeat="city in cities">
-                  <md-card ng-click="showCityDialog($event,city.$id,city)">              
+                  <md-card ng-click="showCityDialog($event,city.$id,city)">
+                  <md-tooltip>
+                    Add Restaurant
+                  </md-tooltip>
                     <p style="padding:20px">{{city.name}}</p>
-                  </md-card>   
+                    <div class="md-actions" layout = "row" style="margin-right: 4%">
+                    <span flex></span>
+                      <md-button ng-click="editCity(cityId)" class="md-primary" style = "margin-bottom: 7px;margin-top:-8px; margin-right:21px; margin-left: 4px; padding-bottom: 2px;">
+                      <md-tooltip>
+                        Edit City name
+                      </md-tooltip>
+                        Edit City
+                      </md-button>
+                      <i class="fa fa-trash-o" ng-click="delete(cityId)">
+                        <md-tooltip>
+                          Delete City
+                        </md-tooltip>
+                      </i>
+                    </div>
+                  </md-card>
                 </div>
-
-             
-
-
-
 
               </div>
 
           </div>
-
-
-        
 
         </div>
 
